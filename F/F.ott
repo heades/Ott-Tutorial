@@ -1,0 +1,30 @@
+metavar term_var, x, y, z, f, u, v ::=
+metavar type_var, X ::=
+indexvar i ::= 
+
+grammar
+
+type, T :: 'Type_' ::=
+
+term, t :: 'Term_' ::= 
+
+G {{ tex \Gamma }} :: 'Context_' ::=
+
+formula :: 'formula_' ::=
+  | judgement   ::  :: judgement
+  | ( formula ) ::  :: parens
+
+defns
+  JTyping :: '' ::=
+  defn
+  G |- t : T :: :: typing :: '' 
+    {{ tex [[G]] \vdash [[t]] : [[T]] }}
+  by
+  
+
+defns
+ Opsem :: '' ::=
+ defn
+ t ~> t' :: :: opsem :: 'R_'
+   {{tex [[t]] \rightsquigarrow [[t']] }}
+ by

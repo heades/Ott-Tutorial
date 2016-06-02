@@ -1,0 +1,6 @@
+*.aux
+*-ott.tex
+*-output.tex
+*.bbl
+*.blg
+*.log
