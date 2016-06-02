@@ -1,14 +1,36 @@
 metavar term_var, x, y, z, f, u, v ::=
-metavar type_var, X ::=
-indexvar i ::= 
+metavar type_var, X, Y ::=
+indexvar i, a ::= 
 
 grammar
 
 type, T :: 'Type_' ::=
+      | X            :: :: TyVar
+      | T1 -> T2     :: :: Arrow
+      {{tex [[T1]] \rightarrow [[T2]]  }}
+      | Forall X . T :: :: Forall
+      {{tex \forall [[X]] . [[T]] }}
+      | ( T )        :: :: Parens
 
-term, t :: 'Term_' ::= 
+term, t :: 'Term_' ::=
+      | x            ::   :: Var
+      | \ x : T . t  ::   :: Lam
+      {{tex \lambda [[x]]:[[T]].[[t]] }}
+      | t1 t2        ::   :: App
+      | \\ X . t     ::   :: TypeLam
+      {{tex \Lambda [[X]].[[t]] }}
+      | [ T ] t      ::   :: Inst
+      | ( t )        :: S :: Parens
+      | [ t / x ] t' :: M :: Subst
+      | h( t )       :: M :: HParens
+      {{tex [[t]] }}
 
 G {{ tex \Gamma }} :: 'Context_' ::=
+  | . :: :: Empty
+  | G1 , G2 :: :: Ext
+  | x : T   :: :: tElm
+  | X : Type :: :: tyElm
+  {{tex [[X]] : \mathsf{Type} }}
 
 formula :: 'formula_' ::=
   | judgement   ::  :: judgement
@@ -20,11 +42,24 @@ defns
   G |- t : T :: :: typing :: '' 
     {{ tex [[G]] \vdash [[t]] : [[T]] }}
   by
-  
 
+  ---------------------- :: Var
+  G1, x : T, G2 |- x : T
+
+  G,x : T1 |- t : T2
+  ------------------------- :: Lam
+  G |- \x : T1.t : T1 -> T2
+  
 defns
  Opsem :: '' ::=
  defn
  t ~> t' :: :: opsem :: 'R_'
    {{tex [[t]] \rightsquigarrow [[t']] }}
  by
+
+  ---------------------- :: Beta
+  (\x:T.t) t' ~> [t'/x]t
+
+  t ~> t'
+  ----------------- :: Lam
+  \x:T.t ~> \x:T.t'

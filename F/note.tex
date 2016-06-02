@@ -4,6 +4,7 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{url}
 \usepackage{color}
+\usepackage{mathpartir}
 
 % Ott file.
 \usepackage{supertabular}
@@ -20,6 +21,28 @@
 \date{}
 
 \maketitle
+
+\section{System F}
+\label{sec:system_f}
+
+$[[\\X.\y:X.y]]$
+
+
+\begin{mathpar}
+\ottdruleVar{} \and
+\ottdruleLam{} \and
+\ottdruleRXXBeta{}
+\end{mathpar}
+
+\[
+\mprset{flushleft}
+\inferrule* [right=Lam] {
+    [[x : X -> X, y : X |- x y : X]]
+}{[[y : X |- \x:X -> X.h(x y) : X]]}
+\]
+
+% section system_f (end)
+
 
 %% \newpage
 %% \section{Full Language Definition}
